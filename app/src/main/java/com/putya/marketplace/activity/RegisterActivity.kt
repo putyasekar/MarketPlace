@@ -4,7 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import com.putya.marketplace.R
+import com.putya.marketplace.model.Users
+import com.putya.marketplace.utils.Constan
 import kotlinx.android.synthetic.main.activity_register.*
 import org.jetbrains.anko.startActivity
 
@@ -62,9 +65,21 @@ class RegisterActivity : AppCompatActivity() {
     private fun insertUser(
         name: String,
         email: String,
-        password: String,
-        user: FirebaseUser
+        hp: String,
+        users: FirebaseUser
+
     ): Boolean {
-        TODO("Not yet implemented")
+        var user = Users()
+        user.uid = users.uid
+        user.name = name
+        user.email = email
+        user.hp = hp
+
+        val database = FirebaseDatabase.getInstance()
+        val key = database.reference.push().key
+        val myRef = database.getReference(Constan.tb_user)
+
+        myRef.child(key!!).setValue(user)
+        return true
     }
 }
