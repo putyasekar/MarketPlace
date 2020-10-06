@@ -56,6 +56,9 @@ dependencies {
     //interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.2.1'
 
+    //anko
+    implementation "org.jetbrains.anko:anko:$anko_version"
+
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
