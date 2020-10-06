@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1075191408893",
+    "firebase_url": "https://marketplace-9c126.firebaseio.com",
+    "project_id": "marketplace-9c126",
+    "storage_bucket": "marketplace-9c126.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1075191408893:android:d493f819e948e36966f694",
+        "android_client_info": {
+          "package_name": "com.putya.marketplace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1075191408893-nn31s2k7g4pgiaqp5dgbb5g7irc9j3mh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.putya.marketplace",
+            "certificate_hash": "93db9c305b9368b2ee7c41b90226d315d0202073"
+          }
+        },
+        {
+          "client_id": "1075191408893-t9hlfh6g706841eap25lig81508nrnio.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtW6QG_hjJci8a2ScnriMXw5LaZhH_T_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1075191408893-gni6t9lbebjrjsjahmkjcevc06578fd0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
