@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/tv_name_register"
+        android:id="@+id/et_name_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_25dp"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_register" />
 
     <EditText
-        android:id="@+id/tv_email_register"
+        android:id="@+id/et_email_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_25dp"
@@ -45,10 +45,10 @@
         android:text="@string/email_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_name_register" />
+        app:layout_constraintTop_toBottomOf="@+id/et_name_register" />
 
     <EditText
-        android:id="@+id/tv_telephone_register"
+        android:id="@+id/et_telephone_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_25dp"
@@ -59,10 +59,10 @@
         android:text="@string/phone_number_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email_register" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email_register" />
 
     <EditText
-        android:id="@+id/tv_password_register"
+        android:id="@+id/et_password_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/_25dp"
@@ -73,7 +73,7 @@
         android:text="@string/password_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_telephone_register" />
+        app:layout_constraintTop_toBottomOf="@+id/et_telephone_register" />
 
     <Button
         android:id="@+id/btn_register"
@@ -86,5 +86,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_register" />
+        app:layout_constraintTop_toBottomOf="@+id/et_password_register" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

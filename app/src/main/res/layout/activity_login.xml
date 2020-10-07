@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:gravity="center_horizontal"
-        android:text="Don't have an account? Register now"
+        android:text="@string/don_t_have_an_account_register_now"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,9 +77,10 @@
         android:layout_marginLeft="@dimen/_25dp"
         android:layout_marginTop="32dp"
         android:layout_marginRight="@dimen/_25dp"
-        android:text="Google"
+        android:text="@string/google"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_signup_link" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

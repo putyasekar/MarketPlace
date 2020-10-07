@@ -22,14 +22,14 @@ class RegisterActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
 
         btn_register.setOnClickListener {
-            if (tv_email_register.text.isNotEmpty() &&
-                tv_name_register.text.isNotEmpty() &&
-                tv_telephone_register.text.isNotEmpty() &&
-                tv_password_register.text.isNotEmpty()
+            if (et_email_register.text.isNotEmpty() &&
+                et_name_register.text.isNotEmpty() &&
+                et_telephone_register.text.isNotEmpty() &&
+                et_password_register.text.isNotEmpty()
             ) {
                 authUserRegister(
-                    tv_email_register.text.toString(),
-                    tv_password_register.text.toString()
+                    et_email_register.text.toString(),
+                    et_password_register.text.toString()
                 )
             }
         }
@@ -47,9 +47,9 @@ class RegisterActivity : AppCompatActivity() {
             ?.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     if (insertUser(
-                            tv_name_register.text.toString(),
-                            tv_email_register.text.toString(),
-                            tv_telephone_register.text.toString(),
+                            et_name_register.text.toString(),
+                            et_email_register.text.toString(),
+                            et_telephone_register.text.toString(),
                             task.result?.user!!
                         )
                     ) {
