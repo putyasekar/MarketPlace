@@ -8,6 +8,7 @@ android {
     buildToolsVersion "30.0.2"
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.putya.marketplace"
         minSdkVersion 17
         targetSdkVersion 30
@@ -67,5 +68,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
+    implementation 'com.android.support:multidex:1.0.3'
 
 }
