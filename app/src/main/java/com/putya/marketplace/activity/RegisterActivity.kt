@@ -9,6 +9,7 @@ import com.putya.marketplace.R
 import com.putya.marketplace.model.Users
 import com.putya.marketplace.utils.Constan
 import kotlinx.android.synthetic.main.activity_register.*
+import org.jetbrains.anko.sdk27.coroutines.onClick
 import org.jetbrains.anko.startActivity
 
 class RegisterActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class RegisterActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        btn_register.setOnClickListener {
+        btn_register.onClick {
             if (et_email_register.text.isNotEmpty() &&
                 et_name_register.text.isNotEmpty() &&
                 et_telephone_register.text.isNotEmpty() &&
