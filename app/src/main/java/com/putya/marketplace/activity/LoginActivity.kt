@@ -28,8 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
     var googleSignInClient: GoogleSignInClient? = null
     private var auth: FirebaseAuth? = null
-
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)

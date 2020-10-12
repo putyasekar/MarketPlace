@@ -16,4 +16,9 @@
     <string name="submit">SUBMIT</string>
     <string name="sign_out">Sign Out</string>
     <string name="market_place">Market Place</string>
+    <string name="text_message_username">Please write your username</string>
+    <string name="text_message_email">Please write your email</string>
+    <string name="text_message_password">Please write your password</string>
+    <string name="text_message_hp">Please write your phone number</string>
+    <string name="text_user">User</string>
 </resources>
