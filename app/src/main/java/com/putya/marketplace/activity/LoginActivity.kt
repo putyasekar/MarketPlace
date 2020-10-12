@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -27,132 +28,173 @@ import org.jetbrains.anko.toast
 class LoginActivity : AppCompatActivity() {
 
     var googleSignInClient: GoogleSignInClient? = null
-    private var auth: FirebaseAuth? = null
-    
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         auth = FirebaseAuth.getInstance()
 
-        btn_login_google.onClick {
-            signIn()
-        }
-
         tv_signup_link.onClick {
             startActivity<RegisterActivity>()
         }
 
         btn_login.onClick {
-            if (et_email_login.text.isNotEmpty() &&
-                et_password_login.text.isNotEmpty()
-            ) {
-                authUserSignIn(
-                    et_email_login.text.toString(),
-                    et_password_login.text.toString()
-                )
-            }
+            signInUser()
         }
+
+//        btn_login_google.onClick {
+//            signIn()
+//        }
+//
+//        tv_signup_link.onClick {
+//            startActivity<RegisterActivity>()
+//        }
+//
+//        btn_login.onClick {
+//            if (et_email_login.text.isNotEmpty() &&
+//                et_password_login.text.isNotEmpty()
+//            ) {
+//                authUserSignIn(
+//                    et_email_login.text.toString(),
+//                    et_password_login.text.toString()
+//                )
+//            }
     }
 
-    //authentication sign in email & password
-    private fun authUserSignIn(email: String, pass: String) {
-        var status: Boolean? = null
-        auth?.signInWithEmailAndPassword(email, pass)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    startActivity<MainActivity>()
-                    finish()
-                } else {
-                    toast("Login Failed")
-                    Log.e("Error", "Message")
-                }
-            }
-    }
+    private fun signInUser() {
+        val email: String = et_email_login.text.toString()
+        val password: String = et_password_login.text.toString()
 
-
-    //request sign in google
-    private fun signIn() {
-        val gson = GoogleSignInOptions
-            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gson)
-        val signInIntent = googleSignInClient?.signInIntent
-        startActivityForResult(signInIntent, 4)
-
-    }
-
-    //authentication firebase sign in
-    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
-        var uid = String()
-        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        auth?.signInWithCredential(credential)?.addOnCompleteListener(this) { task ->
-            if (task.isSuccessful) {
-                val user = auth?.currentUser
-                checkDatabase(task.result?.user?.uid, account)
-                uid = user?.uid.toString()
-            } else {
-            }
-        }
-    }
-
-    private fun checkDatabase(uid: String?, account: GoogleSignInAccount?) {
-
-        val database = FirebaseDatabase.getInstance()
-        val myref = database.getReference(Constan.tb_user)
-        val query = myref.orderByChild("uid").equalTo(auth?.uid)
-
-        query.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    startActivity<MainActivity>()
-                } else {
-                    account?.displayName?.let {
-                        account.email?.let { it1 ->
-                            insetUser(it, it1, "", uid)
-                        }
+        if (email == "") {
+            Toast.makeText(
+                this, getString(R.string.text_message_email),
+                Toast.LENGTH_LONG
+            ).show()
+        } else if (password == "") {
+            Toast.makeText(
+                this, getString(R.string.text_message_password),
+                Toast.LENGTH_LONG
+            ).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            getString(R.string.text_error_message) + task.exception!!.message.toString(),
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
-            }
-
-        })
-    }
-
-    //add data user to realtime database
-    private fun insetUser(name: String, email: String, hp: String, idUser: String?): Boolean {
-        val user = Users()
-        user.email = email
-        user.name = name
-        user.hp = hp
-        user.uid = auth?.uid
-
-        val database = FirebaseDatabase.getInstance()
-        val key = database.reference.push().key
-        val myref = database.getReference(Constan.tb_user)
-
-        myref.child(key ?: "").setValue(user)
-        startActivity<AutentikasiHpActivity>(Constan.key to key)
-        return true
-    }
-
-    //request result
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == 4) {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            try {
-                val account = task.getResult(ApiException::class.java)
-                firebaseAuthWithGoogle(account)
-            } catch (e: ApiException) {
-
-            }
         }
     }
 }
+
+//    //authentication sign in email & password
+//    private fun authUserSignIn(email: String, pass: String) {
+//        var status: Boolean? = null
+//        auth?.signInWithEmailAndPassword(email, pass)
+//            ?.addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    startActivity<MainActivity>()
+//                    finish()
+//                } else {
+//                    toast("Login Failed")
+//                    Log.e("Error", "Message")
+//                }
+//            }
+//    }
+//
+//
+//    //request sign in google
+//    private fun signIn() {
+//        val gson = GoogleSignInOptions
+//            .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestIdToken(getString(R.string.default_web_client_id))
+//            .requestEmail()
+//            .build()
+//
+//        googleSignInClient = GoogleSignIn.getClient(this, gson)
+//        val signInIntent = googleSignInClient?.signInIntent
+//        startActivityForResult(signInIntent, 4)
+//
+//    }
+//
+//    //authentication firebase sign in
+//    fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+//        var uid = String()
+//        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
+//        auth?.signInWithCredential(credential)?.addOnCompleteListener(this) { task ->
+//            if (task.isSuccessful) {
+//                val user = auth?.currentUser
+//                checkDatabase(task.result?.user?.uid, account)
+//                uid = user?.uid.toString()
+//            } else {
+//            }
+//        }
+//    }
+//
+//    private fun checkDatabase(uid: String?, account: GoogleSignInAccount?) {
+//
+//        val database = FirebaseDatabase.getInstance()
+//        val myref = database.getReference(Constan.tb_user)
+//        val query = myref.orderByChild("uid").equalTo(auth?.uid)
+//
+//        query.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onCancelled(error: DatabaseError) {
+//            }
+//
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    startActivity<MainActivity>()
+//                } else {
+//                    account?.displayName?.let {
+//                        account.email?.let { it1 ->
+//                            insetUser(it, it1, "", uid)
+//                        }
+//                    }
+//                }
+//            }
+//
+//        })
+//    }
+//
+//    //add data user to realtime database
+//    private fun insetUser(name: String, email: String, hp: String, idUser: String?): Boolean {
+//        val user = Users()
+//        user.email = email
+//        user.name = name
+//        user.hp = hp
+//        user.uid = auth?.uid
+//
+//        val database = FirebaseDatabase.getInstance()
+//        val key = database.reference.push().key
+//        val myref = database.getReference(Constan.tb_user)
+//
+//        myref.child(key ?: "").setValue(user)
+//        startActivity<AutentikasiHpActivity>(Constan.key to key)
+//        return true
+//    }
+//
+//    //request result
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (requestCode == 4) {
+//            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//            try {
+//                val account = task.getResult(ApiException::class.java)
+//                firebaseAuthWithGoogle(account)
+//            } catch (e: ApiException) {
+//
+//            }
+//        }
+//    }
+//}
